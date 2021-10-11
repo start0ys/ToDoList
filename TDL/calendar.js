@@ -105,8 +105,8 @@ function createCalendar(schedule){
 }
 
 const loadedschedules = localStorage.getItem('schedule'); //localstorange에 저장된 값을 불러오기
+const parsedschedules = JSON.parse(loadedschedules); //string방식으로 저장한걸 가져와서 다시 객체형식으로 변환해야한다.
 if (loadedschedules !== null){
-	const parsedschedules = JSON.parse(loadedschedules); //string방식으로 저장한걸 가져와서 다시 객체형식으로 변환해야한다.
 	parsedschedules.forEach(data => showschedules(data));	
 //	parsedschedules.forEach(function(data){
 //  	       schedules.push(data);
