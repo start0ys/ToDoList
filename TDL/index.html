@@ -5,6 +5,7 @@
   <!-- 화면 해상도에 따라 글자 크기 대응(모바일 대응) -->
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <title>시작 전용 TDL</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
   <!-- jquery CDN -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- fullcalendar CDN -->
@@ -15,7 +16,6 @@
 <style>
   /* body 스타일 */
   html, body {
-    overflow: hidden;
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 14px;
   }
@@ -35,6 +35,29 @@
     background-color: #1a252f;
     border-color: #151e27;
   }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  #calendar-container{
+    width: 50%;
+    float: left;
+    height: 665px;
+  }
+  #todolist-container{
+    width: 50%; 
+    float: right; 
+    height: 665px;
+    /* height: 626px; */
+  }
+  @media screen and (max-width: 767px) {
+    #calendar-container{
+      width: 100%;
+    }
+    #todolist-container{
+      width: 100%;
+    }
+  }
 </style>
 </head>
 <body>
@@ -44,7 +67,7 @@
     <div id="clock" style="font-size: 32px; font-weight: bold;"></div>
   </div>
   <!-- calendar -->
-  <div id='calendar-container' style="width: 50%; float: left;">
+  <div id='calendar-container'>
     <div id='calendar'></div>
     <div>
       <button onclick="plus()" id="plusBtn" class="nomalBtn">추가<b style="color: green; font-size: 15px;"> ✚</b></button>
@@ -52,7 +75,7 @@
     </div>
   </div>
   <!-- todolist -->
-  <div style="width: 50%; float: right; height: 626px;">
+  <div id="todolist-container">
     <div style="text-align: center;">
       <h1 id="listTitle" style="margin-bottom: 0px;"></h1>
       <p style="color: #918f8f; margin-top: 5px; margin-bottom: 10px;">매일 해야하는 것 - 비타민 먹기, 방청소 하기</p>
@@ -69,10 +92,17 @@
       <ul id="js-finishlist"></ul>
     </div>
   </div>
+
+  <div class="footer" style="text-align: center;">
+    <hr>
+    <p>&copy copyright is reserved by 시작</p>
+    <a href="https://blog.naver.com/rladbtjq18" target="_blank " style="font-size: 17px;"><i class='fab fa-blogger' style='font-size:24px'></i> Blog</a>
+    <a href="https://github.com/start0ys" target="_blank " style="font-size: 17px; margin-left: 20px;"><i class='fab fa-github-square' style='font-size:24px'></i> Github</a>
+  </div>
   
   <script src="tdl.js"></script>
   <script src="clock.js"></script>
-  <script src="calendar.js?ver=4"></script>
+  <script src="calendar.js"></script>
   <script>
     var now = new Date();
     var clock = now.toString();
