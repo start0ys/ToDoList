@@ -1,6 +1,21 @@
+function addJavascript(jsname) {
+
+	var th = document.getElementsByTagName('head')[0];
+
+	var s = document.createElement('script');
+
+	s.setAttribute('type','text/javascript');
+
+	s.setAttribute('src',jsname);
+
+	th.appendChild(s);
+
+}
+addJavascript('tdl.js');
 var id = 0;
 var add = 0;
 var del = 0;
+var clickDay = "";
 let schedules = [];
 if(add == 1){
     console.log('h');
@@ -62,6 +77,9 @@ function createCalendar(schedule){
     },
     events: schedule,
     select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+      $('#listTitle').html(todayReturn(arg.start.toString()));
+      var day=dayReturn(arg.start.toString());
+      //listStart(day);
       if(add == 1) {var title = prompt('일정을 입력해주세요');}
       if (title) {
         const scheduleObj = {
@@ -90,3 +108,7 @@ const loadedschedules = localStorage.getItem('schedule'); //localstorange에 저
 const parsedschedules = JSON.parse(loadedschedules); //string방식으로 저장한걸 가져와서 다시 객체형식으로 변환해야한다.
 parsedschedules.forEach(data => showschedules(data));
 createCalendar(parsedschedules);
+
+// function dateClik(){
+//   return
+// }

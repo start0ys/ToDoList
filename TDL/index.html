@@ -38,11 +38,12 @@
 </style>
 </head>
 <body>
+  <!-- 시간 -->
   <div style="text-align: center; border-bottom: 1px dotted; padding: 8px 0px;">
     <div id="date" style="font-size: 18px;"></div>
     <div id="clock" style="font-size: 32px; font-weight: bold;"></div>
   </div>
-  <!-- calendar 태그 -->
+  <!-- calendar -->
   <div id='calendar-container' style="width: 50%; float: left;">
     <div id='calendar'></div>
     <div>
@@ -50,19 +51,34 @@
       <button onclick="minus()" id="minusBtn" class="nomalBtn" style="border-top-width: 3px; padding-bottom: 2px;">제거❌</button>
     </div>
   </div>
-  <div style="width: 50%; float: right;">
-    <h1 style="text-align: center;">To Do List</h1>
+  <!-- todolist -->
+  <div style="width: 50%; float: right; height: 626px;">
     <div style="text-align: center;">
+      <h1 id="listTitle" style="margin-bottom: 0px;"></h1>
+      <p style="color: #918f8f; margin-top: 5px; margin-bottom: 10px;">매일 해야하는 것 - 비타민 먹기, 방청소 하기</p>
       <form id="js-todoform">
-        <input id="js-input" type="text" placeholder="메모를 작성해주세요">
+        <input id="js-input" type="text" placeholder="메모를 작성하고 Enter를 눌러주세요." style="width: 60%; height: 40px; text-align: center;">
       </form>
+    </div>
+    <div style="width: 50%; float: left; text-align: center; height: 500px;">
+      <h3>To Do List</h3>
       <ul id="js-todolist"></ul>
     </div>
+    <div style="width: 50%; float: right; text-align: center; height: 500px;">
+      <h3>Finish List</h3>
+      <ul id="js-finishlist"></ul>
+    </div>
   </div>
+  
   <script src="tdl.js"></script>
   <script src="clock.js"></script>
   <script src="calendar.js"></script>
   <script>
+    var now = new Date();
+    var clock = now.toString();
+    var day=dayReturn(clock);
+    listStart(day);
+    $('#listTitle').html(todayReturn(clock));
     $('.fc-event-time').remove();
     $( 'button.fc-prev-button, button.fc-next-button, button.fc-dayGridMonth-button, button.fc-today-button' ).click( function() {
       $('.fc-event-time').remove();
