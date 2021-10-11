@@ -112,7 +112,7 @@ if (loadedschedules !== null){
 //  	       schedules.push(data);
 //                    setschedules();
 //	});
-)
+}
 createCalendar(parsedschedules);
 
 // function dateClik(){
