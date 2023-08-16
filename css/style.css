@@ -1,0 +1,123 @@
+ /* body 스타일 */
+ html, body {
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+
+/* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
+.fc-header-toolbar {
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+#calendar-container{
+  width: 50%;
+  float: left;
+  height: 645px;
+}
+#todolist-container{
+  width: 50%; 
+  float: right; 
+  height: 645px;
+}
+@media screen and (max-width: 767px) {
+  #calendar-container{
+    width: 100%;
+  }
+  #todolist-container{
+    width: 100%;
+  }
+  .btn-primary {
+    font-size: 10px;
+  }
+  .fc-toolbar-title {
+    font-size: 15px !important;
+  }
+  .fc-toolbar-chunk {
+    display: flex;
+  }
+}
+
+
+td.todoList a.fc-daygrid-day-number::before{
+    content: "";
+    background: #ff1965;
+    margin: 5px 0 0 1px;
+    width: 5px;
+    height: 4px;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    top: -9px;
+    left: -3px;
+}
+
+td.finishList a.fc-daygrid-day-number::before{
+  content: "";
+  background: #58b716;
+  margin: 5px 0 0 1px;
+  width: 5px;
+  height: 4px;
+  display: inline-block;
+  border-radius: 50%;
+  position: relative;
+  top: -9px;
+  left: -3px;
+}
+
+th.fc-col-header-cell > div{
+  background-color: #efefef;
+}
+
+.btn-primary{
+  color: #fff;
+  background-color: #76818d;
+  border-color: #76818d;
+}
+
+.fc-daygrid {
+  border-top: 3px solid black;
+}
+
+.fc-toolbar-title {
+  font-weight: bold;
+}
+
+.text-center {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.bold {font-weight: bold;}
+.f17{font-size: 17px;}
+.f18{font-size: 18px;}
+.f23{font-size: 23px;}
+.f32{font-size: 32px;}
+.mr5{margin-right: 5px;}
+.timeZone{border-bottom: 1px dotted; padding: 8px 0px;}
+.left{float: left;}
+.right{float: right;}
+.todo{width: 50%; height: 500px;}
+.todo-input{width: 60%; height: 40px;}
+.cp{cursor: pointer;}
+
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+  color: red !important;
+}
+
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+  color: blue !important;
+}
