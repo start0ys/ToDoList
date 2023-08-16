@@ -4,7 +4,7 @@ let calendarDB;
 let maxTodoSeq = 0;
 let maxFinishSeq = 0;
 let schedules = [];
-let todoChekObj = {};
+let todoCheckObj = {};
 //  Fire Base 사용 여부
 const isFirebaseAvailable = typeof FIREBASE_CONFIG !== undefined && !!FIREBASE_CONFIG && !$.isEmptyObject(FIREBASE_CONFIG);
 
@@ -32,30 +32,6 @@ const uuid = () => {
  * @param {String} seq : 순서
  */
 const getTodoTagStr = (id, text='', isDel=false, seq) => `<span class="mr5 cp">${text}</span><span class="${isDel ?  'finish' : 'todo'} cp" todo-id="${id}" todo-text="${text}" todo-seq="${seq}">${isDel ?  '❌' : '✔️'}</span>`;
-
-/**
- *  Calendar 저장, 수정, 삭제
- */
-const ScheduleSave = {
-  insert : () => {
-    if(!isFirebaseAvailable || !privateKey) return;
-    calendarDB.doc(privateKey).set({
-      schedules : JSON.stringify(schedules),
-      owner : privateKey
-    });
-  },
-  update : () => {
-    if(!isFirebaseAvailable || !privateKey) return;
-    calendarDB.doc(privateKey).update({
-      schedules : JSON.stringify(schedules)
-    });
-  },
-  delete : () => {
-    if(!isFirebaseAvailable || !privateKey) return;
-    calendarDB.doc(privateKey).delete();
-  }
-
-}
 
 
 $(() => {
@@ -204,7 +180,7 @@ function calendarTodoCheck(pDate) {
     date = `${now.getFullYear()}-${now.getMonth() + 1}`;
   }
 
-  let todoList = Object.keys(todoChekObj)?.filter(day => day.indexOf(date) > -1);
+  let todoList = Object.keys(todoCheckObj)?.filter(day => day.indexOf(date) > -1);
 
   for(let todoDay of todoList) {
     setCheckPoint(todoDay);
@@ -290,9 +266,9 @@ function setTodoCheckObj() {
         let day = data.day || '';
         if(!!day) {
           if(!data.id) data.id = item.id;
-          let todoChekList = todoChekObj[day] || [];
+          let todoChekList = todoCheckObj[day] || [];
           todoChekList.push(data);
-          todoChekObj[day] = todoChekList;
+          todoCheckObj[day] = todoChekList;
           setCheckPoint(day);
         }
         
@@ -306,9 +282,9 @@ function setTodoCheckObj() {
  * @param {String} day 
  */
 function setCheckPoint(day) {
-  if(!day || !todoChekObj[day] || todoChekObj[day].length == 0) return;
+  if(!day || !todoCheckObj[day] || todoCheckObj[day].length == 0) return;
 
-  let todoChekList = todoChekObj[day];
+  let todoChekList = todoCheckObj[day];
   let delList = todoChekList.map(data => data.del);
   let $target = $(`td[data-date='${day}']`);
   if($.inArray(false, delList) == -1){
@@ -467,6 +443,8 @@ function createCalendar(){
  * ToDo  저장, 수정, 삭제
  */
 class SaveTodo {
+
+  static #saveAvailable = id => !isFirebaseAvailable || !privateKey || !id
   static #updateType = {
     '01': (targetData, val) => $.extend(targetData, { text: val }),
     '02': (targetData, val) => $.extend(targetData, { seq: val }),
@@ -474,7 +452,7 @@ class SaveTodo {
   };
 
   static insert(id, text = '') {
-    if (!isFirebaseAvailable || !privateKey || !id) return;
+    if (this.#saveAvailable(id)) return;
     const day = $('#todoDay').val();
     let data = {
       id: id,
@@ -497,7 +475,7 @@ class SaveTodo {
    * @param {String} value
    */
   static update(id, type, val = '') {
-    if (!isFirebaseAvailable || !privateKey || !id) return;
+    if (this.#saveAvailable(id)) return;
     const day = $('#todoDay').val();
     let targetData = todoCheckObj[day]?.filter(data => data.id == id)[0] || {};
     if ($.isEmptyObject(targetData)) return;
@@ -509,12 +487,40 @@ class SaveTodo {
   }
 
   static delete(id) {
-    if (!isFirebaseAvailable || !privateKey || !id) return;
+    if (this.#saveAvailable(id)) return;
     const day = $('#todoDay').val();
     todoDB.doc(id).delete();
     if (!$('.checkList') || $('.checkList').length == 0) {
       delete todoCheckObj[day];
       $(`td[data-date='${day}']`).removeClass('finishList');
     }
+  }
+}
+
+/**
+ *  Calendar 저장, 수정, 삭제
+ */
+class ScheduleSave {
+  
+  static #saveAvailable = () => !isFirebaseAvailable || !privateKey
+
+  static insert() {
+    if(this.#saveAvailable()) return;
+    calendarDB.doc(privateKey).set({
+      schedules : JSON.stringify(schedules),
+      owner : privateKey
+    });
+  }
+
+  static update() {
+    if(this.#saveAvailable()) return;
+    calendarDB.doc(privateKey).update({
+      schedules : JSON.stringify(schedules)
+    });
+  }
+
+  static delete() {
+    if(this.#saveAvailable()) return;
+    calendarDB.doc(privateKey).delete();
   }
 }
