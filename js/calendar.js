@@ -371,7 +371,8 @@ function createCalendar(){
         key:{
           text:'privateKey',
           click: () => {
-            let newPrivateKey = prompt(`현재 privateKey는 ${privateKey} 입니다.\n변경을 원하시면 privateKey를 입력해주세요.`);
+            console.log(`privateKey : ${[privateKey]}`);
+            let newPrivateKey = prompt(`현재 privateKey는 ${privateKey} 입니다.\n변경을 원하시면 privateKey를 입력해주세요.\nprivateKey는 console에서 복사 가능합니다.`);
             if(newPrivateKey) {
               privateKey = newPrivateKey;
               localStorage.setItem('todoPrivateKey', privateKey);

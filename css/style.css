@@ -105,7 +105,7 @@ th.fc-col-header-cell > div{
 .f23{font-size: 23px;}
 .f32{font-size: 32px;}
 .mr5{margin-right: 5px;}
-.timeZone{border-bottom: 1px dotted; padding: 8px 0px;}
+.timeZone{padding: 8px 0px;}
 .left{float: left;}
 .right{float: right;}
 .todo{width: 50%; height: 500px;}
