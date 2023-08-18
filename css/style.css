@@ -106,6 +106,7 @@ th.fc-col-header-cell > div{
 .f23{font-size: 23px;}
 .f32{font-size: 32px;}
 .mr5{margin-right: 5px;}
+.mr8{margin-right: 8px;}
 .timeZone{padding: 8px 0px;}
 .left{float: left;}
 .right{float: right;}
@@ -113,6 +114,9 @@ th.fc-col-header-cell > div{
 .todo-input{width: 60%; height: 40px; border: 1px solid #3788d8; border-radius: 15px;}
 .todo-input:focus{outline: 1px solid #3788d8; border-radius: 15px;}
 .cp{cursor: pointer;}
+span.todo > i {color: #14ab0b; font-size: 16px;}
+span.finish > i {color: #e54527; font-size: 18px;}
+.stroke {-webkit-text-stroke: 1px #000;}
 
 /* 일요일 날짜 빨간색 */
 .fc-day-sun a {
