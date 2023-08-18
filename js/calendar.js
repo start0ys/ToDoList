@@ -31,7 +31,7 @@ const uuid = () => {
  * @param {Boolean} isDel : true-Finish, false-Todo - 기본값 false
  * @param {String} seq : 순서
  */
-const getTodoTagStr = (id, text='', isDel=false, seq) => `<span class="mr5 cp">${text}</span><span class="${isDel ?  'finish' : 'todo'} cp" todo-id="${id}" todo-text="${text}" todo-seq="${seq}">${isDel ?  '❌' : '✔️'}</span>`;
+const getTodoTagStr = (id, text='', isDel=false, seq) => `<span class="mr8 cp">${text}</span><span class="${isDel ?  'finish' : 'todo'} cp" todo-id="${id}" todo-text="${text}" todo-seq="${seq}"><i class="fas ${isDel ?  'fa-times' : 'fa-check'} stroke"></i></span>`;
 
 
 $(() => {
