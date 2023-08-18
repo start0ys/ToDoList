@@ -369,7 +369,7 @@ function createCalendar(){
         prev:{ text:'<', click: () => changeMonth('prev') },
         next:{ text:'>', click: () => changeMonth('next') },
         key:{
-          text:'privateKey',
+          text:'PrivateKey',
           click: () => {
             console.log(`privateKey : ${[privateKey]}`);
             let newPrivateKey = prompt(`현재 privateKey는 ${privateKey} 입니다.\n변경을 원하시면 privateKey를 입력해주세요.\nprivateKey는 console에서 복사 가능합니다.`);

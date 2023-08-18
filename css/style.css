@@ -47,6 +47,7 @@ a{
   .fc-toolbar-chunk {
     display: flex;
   }
+  .todo-input{width: 80% !important;}
 }
 
 
@@ -109,7 +110,8 @@ th.fc-col-header-cell > div{
 .left{float: left;}
 .right{float: right;}
 .todo{width: 50%; height: 500px;}
-.todo-input{width: 60%; height: 40px;}
+.todo-input{width: 60%; height: 40px; border: 1px solid #3788d8; border-radius: 15px;}
+.todo-input:focus{outline: 1px solid #3788d8; border-radius: 15px;}
 .cp{cursor: pointer;}
 
 /* 일요일 날짜 빨간색 */
