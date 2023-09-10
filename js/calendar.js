@@ -8,6 +8,11 @@ let todoCheckObj = {};
 //  Fire Base 사용 여부
 const isFirebaseAvailable = typeof FIREBASE_CONFIG !== undefined && !!FIREBASE_CONFIG && !$.isEmptyObject(FIREBASE_CONFIG);
 
+const SOLAR_HOLIDAYS = ['01-01', '03-01' ,'05-05', '06-06', '08-15', '10-03', '10-09', '12-25'];
+const LUNA_HOLIDAYS = ['0101', '0102', '0408', '0814', '0815', '0816'];
+
+const REPLACED_HOLIDAYS = ['10-02'];
+
 /**
  * 한 자리수의 시간 앞에 '0' 추가
  * @param {number} time : 시간
@@ -428,6 +433,7 @@ function createCalendar(){
   });
   // 캘린더 랜더링
   calendar.render();
+  changeMonth('today');
 
   /**
    * 달력 월 변경
@@ -435,10 +441,49 @@ function createCalendar(){
    */
   function changeMonth(target) {
     target == 'next' ? calendar.next() : target == 'prev' ? calendar.prev() : calendar.today();
-    let date = calendar.getDate();
-    calendarTodoCheck(`${date.getFullYear()}-${getTimeNumber(date.getMonth() + 1)}`);
+    const date = calendar.getDate();
+    const year = date.getFullYear();
+    const month = getTimeNumber(date.getMonth() + 1);
+    setHolidays(year, month);
+    calendarTodoCheck(`${year}-${month}`);
   }
 }
+/**
+ * 공휴일 빨간날 표시
+ * @param {String} year 
+ * @param {String} month 
+ */
+function setHolidays(year, month) {
+  if(!year || !month) return;
+
+
+  const holidays = [...SOLAR_HOLIDAYS.filter(x=> x.startsWith(month)), ...REPLACED_HOLIDAYS.filter(x=> x.startsWith(month))];
+
+  LUNA_HOLIDAYS.forEach(day => {
+    const lunaDay = `${year}${day}`;
+    const solarDay = changeLunaToSolar(lunaDay);
+    if(solarDay.startsWith(month)) holidays.push(solarDay);
+    if(day == '0101') {
+      let mm = solarDay.split('-')[0];
+      let dd = solarDay.split('-')[1];
+      if(dd == '01' && month == '01') {
+        holidays.push('01-31');
+      } else if(mm == month) {
+        holidays.push(`${mm}-${getTimeNumber(Number(dd)-1)}`);
+      }
+    }
+  });
+
+
+  holidays.forEach(day=> {
+      $(`td[data-date='${year}-${day}']`).addClass('holiday');
+
+  })
+
+}
+
+
+
 
 /**
  * ToDo  저장, 수정, 삭제

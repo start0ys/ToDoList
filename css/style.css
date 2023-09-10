@@ -118,12 +118,13 @@ span.todo > i {color: #14ab0b; font-size: 16px;}
 span.finish > i {color: #e54527; font-size: 18px;}
 .stroke {-webkit-text-stroke: 1px #000;}
 
-/* 일요일 날짜 빨간색 */
-.fc-day-sun a {
-  color: red !important;
-}
-
 /* 토요일 날짜 파란색 */
 .fc-day-sat a {
   color: blue !important;
 }
+
+/* 일요일, 공휴일 날짜 빨간색 */
+.fc-day-sun a, .holiday a {
+  color: red !important;
+}
+
