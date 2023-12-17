@@ -1,10 +1,6 @@
-let privateKey;
-let todoDB;
-let calendarDB;
-let maxTodoSeq = 0;
-let maxFinishSeq = 0;
-let schedules = [];
-let todoCheckObj = {};
+let privateKey, todoDB, calendarDB,
+    maxTodoSeq = 0, maxFinishSeq = 0,
+    schedules = [], todoCheckObj = {};
 //  Fire Base 사용 여부
 const isFirebaseAvailable = typeof FIREBASE_CONFIG !== undefined && !!FIREBASE_CONFIG && !$.isEmptyObject(FIREBASE_CONFIG);
 
@@ -148,6 +144,10 @@ function eventBind() {
       }
   });
 
+  $(document).on('click', '.default-color', function() {
+    const color = $(this).attr('default-color');
+    $('#event-color').val(color);
+  });
 
 }
 
@@ -338,8 +338,37 @@ function createCalendar(){
   let addData = null;
 
   let toDolocation = document.querySelector('#todoDayStr').offsetTop;
+  const $modal = $('#modal-area'),
+        $body  = $('body');
+
+
+  const textColor = (color) => {
+    if(!color) return '#fff';
+    let hexColor = ''
+    if(color.substring(0,1) == '#'){
+       hexColor = color.substring(1);      // 색상 앞의 # 제거
+    }else {
+       if (color.search("rgb") == -1 )  return '#fff';
+       color = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+         function hex(x) {
+              return ("0" + parseInt(x).toString(16)).slice(-2);
+         }
+         hexColor = hex(color[1]) + hex(color[2]) + hex(color[3]); 
+    }
+     
+     const rgb = parseInt(hexColor, 16);   // rrggbb를 10진수로 변환
+     const r = (rgb >> 16) & 0xff;  // red 추출
+     const g = (rgb >>  8) & 0xff;  // green 추출
+     const b = (rgb >>  0) & 0xff;  // blue 추출
+     const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+     // 색상 선택
+     return luma < 144.5 ? "#fff" : "#302c2c";
+ };
+
+
+
   // calendar element 취득
-  const calendarEl = $('#calendar')[0];
+  const calendarEl = $('#calendar')[0]
   // full-calendar 생성하기
   const calendar = new FullCalendar.Calendar(calendarEl, {
     height: 'calc(100% - 25px)', // calendar 높이 설정
@@ -352,23 +381,8 @@ function createCalendar(){
             text:'추가',
             click: () => {
               if(addData == null) return;
-              let title = prompt('일정을 입력해주세요');
-              if (title) {
-                const scheduleObj = {
-                    id: uuid(),
-                    title: title,
-                    start: addData.start,
-                    end: addData.end,
-                    allDay: addData.allDay
-                };
-                
-                calendar.addEvent(scheduleObj);
-                schedules.push(scheduleObj);
-                ScheduleSave[schedules.length == 1 ? 'insert' : 'update']();
-              }
-              
-              addData == null;
-              calendar.unselect();
+              $modal.css('display','block');
+              $body.css('overflow', 'hidden');
             }
         },
         prev:{ text:'<', click: () => changeMonth('prev') },
@@ -447,6 +461,38 @@ function createCalendar(){
     setHolidays(year, month);
     calendarTodoCheck(`${year}-${month}`);
   }
+
+  function addEvent() {
+    if(addData == null) return;
+    $modal.css('display','none');
+    $body.css('overflow', 'auto');
+
+    const title = $('#event-content').val();
+    const eventColocr = $('#event-color').val();
+    if(!!title && !!eventColocr) {
+        const scheduleObj = {
+            id: uuid(),
+            title: $('#event-content').val(),
+            start: addData.start,
+            end: addData.end,
+            allDay: addData.allDay,
+            color : eventColocr,
+            textColor: textColor(eventColocr)
+        };
+          
+        calendar.addEvent(scheduleObj);
+        schedules.push(scheduleObj);
+        ScheduleSave[schedules.length == 1 ? 'insert' : 'update']();
+    }
+
+  
+    addData == null;
+    calendar.unselect();
+    $('#event-content').val('');
+    $('#event-color').val('#3788d8');
+  }
+
+  $('#confirm-modal').on('click', () => {addEvent();});
 }
 /**
  * 공휴일 빨간날 표시
