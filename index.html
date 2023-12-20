@@ -64,14 +64,18 @@
   </div>
 
   <div id="modal-area">
-    <div class="modal-content">
+    <div class="modal_content">
       <h3 class="text-center">일정 등록</h3>
       <span>일정 </span><input type="input" id="event-content">
-      <span class="default-color default" default-color="#3788d8">기본</span>
-      <span class="default-color annual" default-color="#d73737">연차</span>
-      <span class="default-color travel" default-color="#0edd1c">여행</span>
+      <div id="color-area">
+        <span class="default-color default" default-color="#3788d8">기본</span>
+        <span class="default-color annual" default-color="#d73737">연차</span>
+        <span class="default-color travel" default-color="#0edd1c">여행</span>
+      </div>
       <input type="color" id="event-color" value="#3788d8">
-      <button id="confirm-modal" class="btn">확인</button>
+      <div>
+        <button id="confirm-modal" class="btn">확인</button>
+      </div>
     </div>
   </div>
 </body>

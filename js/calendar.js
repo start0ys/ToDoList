@@ -342,6 +342,11 @@ function createCalendar(){
         $body  = $('body');
 
 
+  /**
+   * 배경색에 따라 text colr 흰색 or 검정색 return
+   * @param {String} color 
+   * @returns 
+   */
   const textColor = (color) => {
     if(!color) return '#fff';
     let hexColor = ''
@@ -462,6 +467,9 @@ function createCalendar(){
     calendarTodoCheck(`${year}-${month}`);
   }
 
+  /**
+   * 이벤트 추가
+   */
   function addEvent() {
     if(addData == null) return;
     $modal.css('display','none');
