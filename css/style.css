@@ -153,6 +153,7 @@ span.finish > i {color: #e54527; font-size: 18px;}
   background-clip: padding-box;
   border-radius: 0.3rem;
   outline: 0;
+  text-align: center;
 }
 
 #confirm-modal {
@@ -197,5 +198,9 @@ span.finish > i {color: #e54527; font-size: 18px;}
 
 #color-area {
   margin: 17px 0;
+}
+
+#event-content{
+  width: 70%;
 }
 
