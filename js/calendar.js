@@ -149,6 +149,14 @@ function eventBind() {
     $('#event-color').val(color);
   });
 
+
+  $(document).on('keyup', function (e) {  
+    if (e.keyCode === 27 && $('#modal-area').hasClass('active')) {
+      modalClose();
+    }
+  });
+  
+  $(document).on('click', '#modal-close', modalClose);
 }
 
 /**
@@ -388,6 +396,7 @@ function createCalendar(){
               if(addData == null) return;
               $modal.css('display','block');
               $body.css('overflow', 'hidden');
+              $modal.addClass('active');
             }
         },
         prev:{ text:'<', click: () => changeMonth('prev') },
@@ -472,8 +481,6 @@ function createCalendar(){
    */
   function addEvent() {
     if(addData == null) return;
-    $modal.css('display','none');
-    $body.css('overflow', 'auto');
 
     const title = $('#event-content').val();
     const eventColocr = $('#event-color').val();
@@ -496,11 +503,10 @@ function createCalendar(){
   
     addData == null;
     calendar.unselect();
-    $('#event-content').val('');
-    $('#event-color').val('#3788d8');
+    modalClose();
   }
 
-  $('#confirm-modal').on('click', () => {addEvent();});
+  $('#modal-confirm').on('click', addEvent);
 }
 /**
  * 공휴일 빨간날 표시
@@ -536,8 +542,15 @@ function setHolidays(year, month) {
 
 }
 
-
-
+/**
+ * Modal Close
+ */
+function modalClose() {
+  $('#modal-area').css('display','none').removeClass('active');
+  $('body').css('overflow', 'auto');
+  $('#event-content').val('');
+  $('#event-color').val('#3788d8');
+}
 
 /**
  * ToDo  저장, 수정, 삭제

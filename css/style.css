@@ -48,6 +48,10 @@ a{
     display: flex;
   }
   .todo-input{width: 80% !important;}
+
+  .modal_content {
+    width: 80% !important;
+  }
 }
 
 
@@ -156,7 +160,7 @@ span.finish > i {color: #e54527; font-size: 18px;}
   text-align: center;
 }
 
-#confirm-modal {
+#modal-confirm {
   color: #fff;
   background-color: #76818d;
   border-color: #76818d;
@@ -165,8 +169,8 @@ span.finish > i {color: #e54527; font-size: 18px;}
   width: 100%;
 }
 
-#confirm-modal:hover,
-#confirm-modal:focus {
+#modal-confirm:hover,
+#modal-confirm:focus {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
@@ -202,5 +206,20 @@ span.finish > i {color: #e54527; font-size: 18px;}
 
 #event-content{
   width: 70%;
+}
+
+#modal-close{
+  float: right;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1;
+  color: #76818d;
+}
+
+#modal-close:focus, 
+#modal-close:hover {
+  color: #0d6efd;
+  text-decoration: none;
+  cursor: pointer;
 }
 
