@@ -33,32 +33,51 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- 시간 -->
-  <div class="timeZone text-center">
-    <div id="date" class="f18"></div>
-    <div id="clock" class="f32 bold"></div>
-  </div>
-  <!-- calendar -->
-  <div id='calendar-container'>
-    <div id='calendar'></div>
-  </div>
-  <!-- todolist -->
-  <div id="todolist-container">
-    <div class="text-center">
-      <div id="todoDayStr" class="bold f23"></div>
-      <input type="hidden" name="todoDay" id="todoDay">
-      <!-- <p style="color: #918f8f; margin-top: 5px; margin-bottom: 10px;">매일 해야하는 것 - 비타민 먹기, 방청소 하기</p> -->
-      <input id="todoInput" type="text" placeholder="📝메모를 작성하고 Enter를 눌러주세요." class="todo-input text-center">
+
+  <div id="content-area">
+      <!-- 시간 -->
+    <div class="timeZone text-center">
+      <div id="date" class="f18"></div>
+      <div id="clock" class="f32 bold"></div>
     </div>
-    <div class="todo left text-center">
-      <span class="f17 bold"><i class="fas fa-calendar-check stroke mr5" style="color: #14ab0b;"></i>To Do List</span>
-      <div id="todolist"></div>
+    <!-- calendar -->
+    <div id='calendar-container'>
+      <div id='calendar'></div>
     </div>
-    <div class="todo right text-center">
-      <span class="f17 bold"><i class="fas fa-calendar-times stroke mr5" style="color: #e54527;"></i>Finish List</span>
-      <div id="finishlist"></div>
+    <!-- todolist -->
+    <div id="todolist-container">
+      <div class="text-center">
+        <div id="todoDayStr" class="bold f23"></div>
+        <input type="hidden" name="todoDay" id="todoDay">
+        <!-- <p style="color: #918f8f; margin-top: 5px; margin-bottom: 10px;">매일 해야하는 것 - 비타민 먹기, 방청소 하기</p> -->
+        <input id="todoInput" type="text" placeholder="📝메모를 작성하고 Enter를 눌러주세요." class="todo-input text-center">
+      </div>
+      <div class="todo left text-center">
+        <span class="f17 bold"><i class="fas fa-calendar-check stroke mr5" style="color: #14ab0b;"></i>To Do List</span>
+        <div id="todolist"></div>
+      </div>
+      <div class="todo right text-center">
+        <span class="f17 bold"><i class="fas fa-calendar-times stroke mr5" style="color: #e54527;"></i>Finish List</span>
+        <div id="finishlist"></div>
+      </div>
     </div>
   </div>
-    
+
+  <div id="modal-area">
+    <div class="modal_content">
+      <h3 class="text-center">일정 등록</h3>
+      <span>일정 </span><input type="input" id="event-content">
+      <div id="color-area">
+        <span class="default-color default" default-color="#3788d8">기본</span>
+        <span class="default-color annual" default-color="#d73737">연차</span>
+        <span class="default-color travel" default-color="#0edd1c">여행</span>
+      </div>
+      <div>선택 색상</div>
+      <input type="color" id="event-color" value="#3788d8">
+      <div>
+        <button id="confirm-modal" class="btn">확인</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
