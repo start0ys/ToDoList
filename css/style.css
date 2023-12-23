@@ -151,7 +151,6 @@ span.finish > i {color: #e54527; font-size: 18px;}
   border: 1px solid #888;
   width: 30%;
   position: relative;
-  /* display: flex; */
   flex-direction: column;
   pointer-events: auto;
   background-clip: padding-box;
@@ -182,8 +181,6 @@ span.finish > i {color: #e54527; font-size: 18px;}
   height: 27px;
   text-align: center;
   color: #fff;
-  /* display: grid;
-  align-content: center; */
   cursor: pointer;
   padding: 8px 10px;
 }
@@ -193,7 +190,7 @@ span.finish > i {color: #e54527; font-size: 18px;}
 }
 
 .annual {
-  background-color: #d73737;
+  background-color: #e65656;
 }
 
 .travel {
@@ -206,6 +203,13 @@ span.finish > i {color: #e54527; font-size: 18px;}
 
 #event-content{
   width: 70%;
+  border: 1px solid #3788d8; 
+  border-radius: 8px;
+  text-align: center;
+}
+
+#event-content:focus{
+  outline: 1px solid #3788d8; 
 }
 
 #modal-close{
