@@ -159,7 +159,7 @@ span.finish > i {color: #e54527; font-size: 18px;}
   text-align: center;
 }
 
-#modal-confirm {
+.modal-btn {
   color: #fff;
   background-color: #76818d;
   border-color: #76818d;
@@ -168,8 +168,8 @@ span.finish > i {color: #e54527; font-size: 18px;}
   width: 100%;
 }
 
-#modal-confirm:hover,
-#modal-confirm:focus {
+.modal-btn:hover,
+.modal-btn:focus {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
@@ -229,5 +229,22 @@ span.finish > i {color: #e54527; font-size: 18px;}
   color: #0d6efd;
   text-decoration: none;
   cursor: pointer;
+}
+
+#btn-area {
+  display: flex;
+  justify-content: center;
+}
+
+#empty-area {
+  width: 30px;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
 

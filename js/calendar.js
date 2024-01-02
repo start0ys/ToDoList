@@ -432,14 +432,16 @@ function createCalendar(){
       toDolocation = document.querySelector('#todoDayStr').offsetTop;
     },
     eventClick: event => {
-      if(confirm(`${event.event.title} 을 제거 하시겠습니까?`)){
-        calendar.getEventById(event.event.id).remove();
-        const clearSchedules = schedules.filter(data =>{
-            return data.id !== event.event.id;
-        }); 
-        schedules = clearSchedules; 
-        ScheduleSave[schedules.length == 0 ? 'delete' : 'insert']();
-      }
+
+      addData = event.event;
+      $('#event-content').val(addData.title);
+      $('#event-color').val(addData.backgroundColor);
+      $('#empty-area').removeClass('hide').addClass('show');
+      $('#modal-delete').removeClass('hide').addClass('show');
+      $modal.css('display','block');
+      $body.css('overflow', 'hidden');
+      $modal.addClass('active');
+
     },
     events: schedules,
     select: arg => { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
@@ -477,7 +479,7 @@ function createCalendar(){
   }
 
   /**
-   * 이벤트 추가
+   * 모달에서 이벤트 추가
    */
   function addEvent() {
     if(addData == null) return;
@@ -485,6 +487,7 @@ function createCalendar(){
     const title = $('#event-content').val();
     const eventColocr = $('#event-color').val();
     if(!!title && !!eventColocr) {
+        removeEvent(addData.id);
         const scheduleObj = {
             id: uuid(),
             title: $('#event-content').val(),
@@ -506,7 +509,36 @@ function createCalendar(){
     modalClose();
   }
 
+  /**
+   * 모달에서 이벤트 삭제
+   */
+  function deleteEvent() {
+    if(addData == null) return;
+
+    const title = $('#event-content').val() || '';
+
+    if(confirm(`${title} 을 제거 하시겠습니까?`)){
+      removeEvent(addData.id);
+      addData == null;
+      modalClose();
+    }
+  }
+
+  /**
+   * 이벤트 제거
+   * @param {String} eventId 
+   */
+  function removeEvent(eventId) {
+    if(!eventId) return;
+
+    calendar.getEventById(eventId).remove();
+    const clearSchedules = schedules.filter(data => data.id !== eventId); 
+    schedules = clearSchedules; 
+    ScheduleSave[schedules.length == 0 ? 'delete' : 'insert']();
+  }
+
   $('#modal-confirm').on('click', addEvent);
+  $('#modal-delete').on('click', deleteEvent);
 }
 /**
  * 공휴일 빨간날 표시
@@ -550,6 +582,8 @@ function modalClose() {
   $('body').css('overflow', 'auto');
   $('#event-content').val('');
   $('#event-color').val('#3788d8');
+  $('#empty-area').removeClass('show').addClass('hide');
+  $('#modal-delete').removeClass('show').addClass('hide');
 }
 
 /**
