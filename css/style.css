@@ -185,16 +185,20 @@ span.finish > i {color: #e54527; font-size: 18px;}
   padding: 8px 10px;
 }
 
-.default {
+.default-color.default {
   background-color: #3788d8;
 }
 
-.annual {
+.default-color.annual {
   background-color: #e65656;
 }
 
-.travel {
+.default-color.travel {
   background-color: #0edd1c;
+}
+
+.default-color.birthday {
+  background-color: #00c7c7;
 }
 
 #color-area {
