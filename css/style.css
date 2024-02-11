@@ -128,8 +128,12 @@ span.finish > i {color: #e54527; font-size: 18px;}
 }
 
 /* 일요일, 공휴일 날짜 빨간색 */
-.fc-day-sun a, .holiday a {
+.fc-day-sun a, td.fc-daygrid-day:has(.holiday) a {
   color: red !important;
+}
+
+.holiday {
+  text-align: end;
 }
 
 #modal-area {
@@ -248,3 +252,14 @@ span.finish > i {color: #e54527; font-size: 18px;}
   display: none;
 }
 
+.view-mode td {
+  border: none;
+}
+
+.view-mode th {
+  border: none;
+}
+
+.fc-day-today  .fc-daygrid-day-number {
+  font-weight: bold;
+}
