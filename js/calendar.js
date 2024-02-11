@@ -3,11 +3,7 @@ let privateKey, todoDB, calendarDB,
     schedules = [], todoCheckObj = {};
 //  Fire Base 사용 여부
 const isFirebaseAvailable = typeof FIREBASE_CONFIG !== undefined && !!FIREBASE_CONFIG && !$.isEmptyObject(FIREBASE_CONFIG);
-
-const SOLAR_HOLIDAYS = ['01-01', '03-01' ,'05-05', '06-06', '08-15', '10-03', '10-09', '12-25'];
-const LUNA_HOLIDAYS = ['0101', '0102', '0408', '0814', '0815', '0816'];
-
-const REPLACED_HOLIDAYS = ['10-02'];
+const mode = new URLSearchParams(location.search).get('mode') || '';
 
 /**
  * 한 자리수의 시간 앞에 '0' 추가
@@ -36,6 +32,8 @@ const getTodoTagStr = (id, text='', isDel=false, seq) => `<span class="mr8 cp">$
 
 
 $(() => {
+    //* TODO test
+    if(mode === '01') $('#calendar').addClass('view-mode');
     setTopDate();
     setInterval(clock);
     setPrivateKey();
@@ -382,6 +380,16 @@ function createCalendar(){
 
   // calendar element 취득
   const calendarEl = $('#calendar')[0]
+
+  const headerToolbar = mode === '01' ? {
+    left: 'title',
+    right: 'today'
+  } : {
+    left: 'add key',
+    center: 'title',
+    right: 'today prev,next'
+  };
+
   // full-calendar 생성하기
   const calendar = new FullCalendar.Calendar(calendarEl, {
     height: 'calc(100% - 25px)', // calendar 높이 설정
@@ -389,6 +397,7 @@ function createCalendar(){
     slotMinTime: '00:00', // Day 캘린더에서 시작 시간
     slotMaxTime: '24:00', // Day 캘린더에서 종료 시간
     themeSystem: 'bootstrap5',
+    googleCalendarApiKey : GOOOGLE_API_KEY,
     customButtons:{
         add:{
             text:'추가',
@@ -415,11 +424,7 @@ function createCalendar(){
         },
         today:{ text:'오늘', click: () => changeMonth('today') }
     },
-    headerToolbar: {
-      left: 'add key',
-      center: 'title',
-      right: 'today prev,next'
-    },
+    headerToolbar: headerToolbar,
     initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
     editable: true, // 수정 가능?
     selectable: true, // 달력 일자 드래그 설정가능
@@ -432,7 +437,9 @@ function createCalendar(){
       toDolocation = document.querySelector('#todoDayStr').offsetTop;
     },
     eventClick: event => {
-
+      event.jsEvent.stopPropagation();
+      event.jsEvent.preventDefault();
+      if($(event.el).hasClass('holiday')) return;
       addData = event.event;
       $('#event-content').val(addData.title);
       $('#event-color').val(addData.backgroundColor);
@@ -444,6 +451,14 @@ function createCalendar(){
 
     },
     events: schedules,
+    eventSources : [
+      {
+        googleCalendarId : 'ko.south_korea#holiday@group.v.calendar.google.com', 
+        className : 'holiday', 
+        color : 'transparent', 
+        textColor : '#FF0000'
+      }
+    ],
     select: arg => { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
       addData = arg;
       setDayByTodoList(arg.startStr);
@@ -474,7 +489,6 @@ function createCalendar(){
     const date = calendar.getDate();
     const year = date.getFullYear();
     const month = getTimeNumber(date.getMonth() + 1);
-    setHolidays(year, month);
     calendarTodoCheck(`${year}-${month}`);
   }
 
@@ -539,39 +553,6 @@ function createCalendar(){
 
   $('#modal-confirm').on('click', addEvent);
   $('#modal-delete').on('click', deleteEvent);
-}
-/**
- * 공휴일 빨간날 표시
- * @param {String} year 
- * @param {String} month 
- */
-function setHolidays(year, month) {
-  if(!year || !month) return;
-
-
-  const holidays = [...SOLAR_HOLIDAYS.filter(x=> x.startsWith(month)), ...REPLACED_HOLIDAYS.filter(x=> x.startsWith(month))];
-
-  LUNA_HOLIDAYS.forEach(day => {
-    const lunaDay = `${year}${day}`;
-    const solarDay = changeLunaToSolar(lunaDay);
-    if(solarDay.startsWith(month)) holidays.push(solarDay);
-    if(day == '0101') {
-      let mm = solarDay.split('-')[0];
-      let dd = solarDay.split('-')[1];
-      if(dd == '01' && month == '01') {
-        holidays.push('01-31');
-      } else if(mm == month) {
-        holidays.push(`${mm}-${getTimeNumber(Number(dd)-1)}`);
-      }
-    }
-  });
-
-
-  holidays.forEach(day=> {
-      $(`td[data-date='${year}-${day}']`).addClass('holiday');
-
-  })
-
 }
 
 /**
