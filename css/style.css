@@ -64,6 +64,10 @@ a{
   .view-mode .fc-today-button {
     display: none;
   }
+
+  .view-mode .fc-day-today  .view-mode-day-number {
+    font-weight: bold;
+  }
 }
 
 
