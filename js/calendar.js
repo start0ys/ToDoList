@@ -473,6 +473,20 @@ function createCalendar(){
       if($.isEmptyObject(targetData)) return;
       $.extend(targetData, { start :event.start, end: event.end, allDay: event.allDay} );      
       ScheduleSave.update();
+    },
+    dayCellContent: info => {
+      if(mode !== '01') return;
+      const number = document.createElement('a');
+      number.classList.add('tc-daygrid-day-number');
+      number.innerHTML = info.dayNumberText.replace('일', '');
+      if(info.view.type === 'dayGridMonth') {
+        return {
+          html : number.outerHTML
+        };
+      }
+      return {
+        domNodes: []
+      }
     }
     
   });

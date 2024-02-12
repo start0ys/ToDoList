@@ -52,6 +52,18 @@ a{
   .modal_content {
     width: 80% !important;
   }
+
+  .view-mode .fc-daygrid {
+    font-size: 13px !important;
+  }
+
+  .view-mode .fc-header-toolbar {
+    margin-bottom: 5px !important;
+  }
+
+  .view-mode .fc-today-button {
+    display: none;
+  }
 }
 
 
