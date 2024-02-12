@@ -477,7 +477,7 @@ function createCalendar(){
     dayCellContent: info => {
       if(mode !== '01') return;
       const number = document.createElement('a');
-      number.classList.add('tc-daygrid-day-number');
+      number.classList.add('view-mode-day-number');
       number.innerHTML = info.dayNumberText.replace('일', '');
       if(info.view.type === 'dayGridMonth') {
         return {
